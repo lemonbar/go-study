@@ -3,13 +3,59 @@ package main
 
 import (
 	"fmt"
+	"strconv"
 
 	lemon "gostudy/studystruct"
 )
 
 func main() {
-	showStructInitialUsage()
-	showStructAnonyFieldUsage()
+	//showStructInitialUsage()
+	//showStructAnonyFieldUsage()
+	//showFunctionTransferByValueAndRefer()
+	//showFunctionMultiInputParameters()
+	//showFunctionMultiInterfaceParameters()
+	//showDeferUsage()
+	showMethodAliasNotContainsMethod()
+}
+
+type Test lemon.MethodStruct01
+
+func (test *Test) tm() {
+	fmt.Println("new method")
+}
+
+func showMethodAliasNotContainsMethod() {
+	var MS1 lemon.MethodStruct01
+	MS1.Method1()
+	var MS2 Test
+	MS2.tm()
+}
+
+func showDeferUsage() {
+	lemon.DeferOrder()
+	//lemon.DeferA()
+}
+
+func showFunctionMultiInterfaceParameters() {
+	lemon.PrintType(5, "aaaa")
+	var2 := []interface{}{6, 7, 9, "bbb", "ccc"}
+	lemon.PrintType(var2...)
+}
+
+func showFunctionMultiInputParameters() {
+	fmt.Println(lemon.Min(4, 6, 9, 10, 3, 2))
+	arr := []int{9, 5, 3, 10, 20, 2}
+	fmt.Println(lemon.Min(arr...))
+}
+
+func showFunctionTransferByValueAndRefer() {
+	changeValue := lemon.Struct1{Int1: 1}
+	fmt.Println("before change value, Int1 value is " + strconv.Itoa(changeValue.Int1))
+	lemon.ChangeValue(&changeValue, 2)
+	fmt.Println("after change value, Int1 value is " + strconv.Itoa(changeValue.Int1))
+	fmt.Println("before not change value, Int1 value is " + strconv.Itoa(changeValue.Int1))
+	lemon.NotChangeValue(changeValue, 4)
+	fmt.Println("after not change value, Int1 value is " + strconv.Itoa(changeValue.Int1))
 }
 
 func showStructAnonyFieldUsage() {
