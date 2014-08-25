@@ -15,7 +15,33 @@ func main() {
 	//showFunctionMultiInputParameters()
 	//showFunctionMultiInterfaceParameters()
 	//showDeferUsage()
-	showMethodAliasNotContainsMethod()
+	//showMethodAliasNotContainsMethod()
+	showInterfaceUsage()
+}
+
+func showInterfaceUsage() {
+	sq1 := new(lemon.Square)
+	sq1.Side = 5
+	var areaIntf lemon.Shaper
+	areaIntf = sq1
+
+	//判断接口的类型
+	if v, ok := areaIntf.(*lemon.Square); ok {
+		fmt.Printf("The square has area: %f\n", v.Area())
+	}
+
+	//判断接口的类型
+	switch areaIntf.(type) {
+	case *lemon.Square:
+		fmt.Printf("The square area is %f\n", areaIntf.Area())
+	default:
+		fmt.Printf("The default type")
+	}
+
+	//判断变量实现了接口
+	if _, ok := areaIntf.(lemon.Shaper); ok {
+		fmt.Printf("The square area is %f\n", sq1.Area())
+	}
 }
 
 type Test lemon.MethodStruct01
